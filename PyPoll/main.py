@@ -11,8 +11,14 @@ Vote_count = []
 County =[]
 
 Names = []
+ 
+Named = []
 
-name = []
+tally = [0, 0, 0, 0,]
+
+Candidate_index = int(Names)
+   
+tally[Candidate_index] += 1
 
 
 with open(poll_csv, newline="") as csvfile:
@@ -20,19 +26,14 @@ with open(poll_csv, newline="") as csvfile:
   header = next(csvreader)
 
   for row in csvreader:
-      Vote_count.append(row[0])
+    Vote_count.append(row[0])
 
-      County.append(row[1])
+    County.append(row[1])
 
-      Names.append(row[2])
+    Names.append(row[2])
 
-      for x in Names:
-        if x not in name:
-         name.append(x)
-
-
-  print(len(Vote_count))
-  print(name)
+  #print(len(Vote_count))
+  print(tally)
 
   #* The total number of votes cast
 
