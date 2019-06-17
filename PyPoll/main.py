@@ -7,8 +7,13 @@ poll_csv = os.path.join('resources','election_data.csv')
 #* You will be give a set of poll data called [election_data.csv](PyPoll/Resources/election_data.csv). The dataset is composed of three columns: `Voter ID`, `County`, and `Candidate`. Your task is to create a Python script that analyzes the votes and calculates each of the following:
 
 Vote_count = []
+
 County =[]
+
 Names = []
+
+name = []
+
 
 with open(poll_csv, newline="") as csvfile:
   csvreader = csv.reader(csvfile, delimiter=',')
@@ -20,8 +25,14 @@ with open(poll_csv, newline="") as csvfile:
       County.append(row[1])
 
       Names.append(row[2])
-      
+
+      for x in Names:
+        if x not in name:
+         name.append(x)
+
+
   print(len(Vote_count))
+  print(name)
 
   #* The total number of votes cast
 
