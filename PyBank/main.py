@@ -23,10 +23,12 @@ import csv
 csvpath = os.path.join('Resources', 'budget_data.csv')
 months = []
 profit = []
-change = []
+amtchange= []
+change = 0
 Total = 0
 MS = 0
-Value = 0
+changeavgtot= 0
+x = 0
 
 with open(csvpath, newline="") as csvfile:
   csvreader = csv.reader(csvfile, delimiter=',')
@@ -34,22 +36,46 @@ with open(csvpath, newline="") as csvfile:
 
   for row in csvreader:
     months.append(row[0])
-    #print(months)
-    #print(row[0])
     profit.append(row[1])
-    #print(profit)
-    #print(row[1])
     Total = Total + int(row[1])
     MS = len(months)
-#Change = int(profit[profit]) - int(profit[profit - 1])
-Average = Total / MS
-array = [months,profit]
+    if x != 0:
+      change = int(row[1]) - x
+      amtchange.append(change)
+      changeavgtot -= change 
+    x = int(row[1])
 
-print(change)
-print(min(str(array[0,1])))
-print(max(array[1]))
+  
+amont = sum(amtchange)
+print(amont)
+Average = amont / len(amtchange)
+print(changeavgtot)
 print(round(Average, 2))
-print(MS)
-print(Total)
-print("------------------------------------------------------------------------")
-print("There is a total of " + str(len(months)) + " months.")
+
+
+print("Finacial Analysis")
+print("---------------------------")
+print("Total Months: " + str(len(amtchange)))
+print("Total: " + str(Total)) 
+print("Average Change: $" + str(round(Average, 2)))
+
+
+#print(change)
+#print(min(str(array[0,1])))
+#print(max(array[1]))
+#print(round(Average, 2))
+#print(MS)
+#print(Total)
+#print("------------------------------------------------------------------------")
+#print("There is a total of " + str(len(months)) + " months.")
+
+
+  #```text
+  #Financial Analysis
+  #---------------------------
+  #Total Months: 86
+  #Total: $38382578
+  #Average  Change: $-2315.12
+  #Greatest Increase in Profits: Feb-2012 ($1926159)
+  #Greatest Decrease in Profits: Sep-2013 ($-2196167)
+  #```
