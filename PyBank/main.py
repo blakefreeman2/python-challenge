@@ -21,6 +21,7 @@ import csv
 
 #* As an example, your analysis should look similar to the one below:
 csvpath = os.path.join('Resources', 'budget_data.csv')
+mydict = {}
 months = []
 profit = []
 amtchange= []
@@ -32,11 +33,10 @@ x = 0
 
 with open(csvpath, newline="") as csvfile:
   csvreader = csv.reader(csvfile, delimiter=',')
-  header = next(csvreader)
-
+  header = next(csvreader) 
   for row in csvreader:
-    months.append(row[0])
-    profit.append(row[1])
+    months.append(str(row[0]))
+    profit.append(str(row[1]))
     Total = Total + int(row[1])
     MS = len(months)
     if x != 0:
@@ -44,14 +44,14 @@ with open(csvpath, newline="") as csvfile:
       amtchange.append(change)
       changeavgtot -= change 
     x = int(row[1])
-
   
+mydict = dict(zip(months,profit))
 amont = sum(amtchange)
-print(amont)
+#print(amont)
 Average = amont / len(amtchange)
-print(changeavgtot)
-print(round(Average, 2))
-
+#print(changeavgtot)
+#print(round(Average, 2))
+print(mydict.min())
 
 print("Finacial Analysis")
 print("---------------------------")
