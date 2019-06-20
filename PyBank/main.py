@@ -5,7 +5,7 @@ import csv
 
 #![Revenue](Images/revenue-per-lead.png)
 
-#* In this challenge, you are tasked with creating a Python script for analyzing the financial records of your company. You will give a set of financial data called [budget_data.csv](PyBank/Resources/budget_data.csv). The dataset is composed of two columns: `Date` and `Profit/Losses`. (Thankfully, your company has rather lax standards for accounting so the records are simple.)
+#* In this challenge, you are tasked with creating a Python script for analyzing the financial records of your company. You will give a set of financial data called [budget_data.csv](PyBank/Resources/budget_data.csv). The dataset is composed of two columns: `months` and `Profit/Losses`. (Thankfully, your company has rather lax standards for accounting so the records are simple.)
 
 #* Your task is to create a Python script that analyzes the records to calculate each of the following:
 
@@ -15,16 +15,18 @@ import csv
 
   #* The average of the changes in "Profit/Losses" over the entire period
 
-  #* The greatest increase in profits (date and amount) over the entire period
+  #* The greatest increase in profits (months and amount) over the entire period
 
-  #* The greatest decrease in losses (date and amount) over the entire period
+  #* The greatest decrease in losses (months and amount) over the entire period
 
 #* As an example, your analysis should look similar to the one below:
 csvpath = os.path.join('Resources', 'budget_data.csv')
-mydict = {}
+
 months = []
 profit = []
 amtchange= []
+minmonths = []
+maxmonths = []
 change = 0
 Total = 0
 MS = 0
@@ -44,32 +46,35 @@ with open(csvpath, newline="") as csvfile:
       amtchange.append(change)
       changeavgtot -= change 
     x = int(row[1])
+
   
 mydict = dict(zip(months,profit))
 amont = sum(amtchange)
-#print(amont)
 Average = amont / len(amtchange)
-#print(changeavgtot)
-#print(round(Average, 2))
-print(mydict.min())
+
+
+import numpy as np
+minmonths = np.argmin(amtchange) + 1
+maxmonths = np.argmax(amtchange) + 1 
 
 print("Finacial Analysis")
 print("---------------------------")
 print("Total Months: " + str(len(amtchange)))
 print("Total: " + str(Total)) 
 print("Average Change: $" + str(round(Average, 2)))
+print("Greates Increase in Profits: " + (months[maxmonths]) +" (" + str(max(amtchange)) + ")")
+print("Greates Increase in Profits: " + (months[minmonths]) +" (" + str(min(amtchange)) + ")")
 
+text_file = open("PyBank.txt","w",newline='')
 
-#print(change)
-#print(min(str(array[0,1])))
-#print(max(array[1]))
-#print(round(Average, 2))
-#print(MS)
-#print(Total)
-#print("------------------------------------------------------------------------")
-#print("There is a total of " + str(len(months)) + " months.")
-
-
+text_file.write(("Finacial Analysis\n"))
+text_file.write("---------------------------\n")
+text_file.write("Total Months: " + str(len(amtchange)) + "\n")
+text_file.write("Total: " + str(Total)+ "\n") 
+text_file.write("Average Change: $" + str(round(Average, 2)) + "\n")
+text_file.write("Greates Increase in Profits: " + (months[maxmonths]) +" (" + str(max(amtchange)) + ")\n")
+text_file.write("Greates Increase in Profits: " + (months[minmonths]) +" (" + str(min(amtchange)) + ")\n")
+text_file.close()
   #```text
   #Financial Analysis
   #---------------------------
