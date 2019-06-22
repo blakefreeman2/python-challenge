@@ -2,28 +2,19 @@
 import os 
 import csv
 import numpy as np
-#![Vote-Counting](Images/Vote_counting.png)
-#* In this challenge, you are tasked with helping a small, rural town modernize its vote-counting process. (Up until now, Uncle Cleetus had been trustfully tallying them one-by-one, but unfortunately, his concentration isn't what it used to be.)
+
 poll_csv = os.path.join('resources','election_data.csv')
-#* You will be give a set of poll data called [election_data.csv](PyPoll/Resources/election_data.csv). The dataset is composed of three columns: `Voter ID`, `County`, and `Candidate`. Your task is to create a Python script that analyzes the votes and calculates each of the following:
 
 Candidates = []
-
-
-
 
 with open(poll_csv, newline="") as csvfile:
   csvreader = csv.reader(csvfile, delimiter=',')
   header = next(csvreader)
 
   for row in csvreader:
-
-
     Candidates.append(row[2])
 
-Names = np.unique(Candidates)
 Votes = np.array(np.unique(Candidates, return_counts=True))
-
 Total =  len(Candidates)
 
 Can1 = Votes[0,0]
@@ -40,11 +31,36 @@ PCan2V = float(Can2V) / float(Total) * 100
 PCan3V = float(Can3V) / float(Total) * 100
 PCan4V = float(Can4V) / float(Total) * 100
 
+winner = max(set(Candidates),key=Candidates.count)
 
+
+print("Election Results")
+print("-------------------------")
+print("Total Votes: " + str(Total))
+print("-------------------------")
 print(f"{Can1}  {round(PCan1V , 2)}%  ({Can1V})")
 print(f"{Can2}  {round(PCan2V , 2)}%  ({Can2V})")
 print(f"{Can3}  {round(PCan3V , 2)}%  ({Can3V})")
 print(f"{Can4}  {round(PCan4V , 2)}%  ({Can4V})")
+print("-------------------------")
+print("Winner: " +  winner)
+print("-------------------------")
+
+
+text_file = open("PyPoll.txt","w",newline='')
+
+text_file.write("Election Results\n")
+text_file.write("-------------------------\n")
+text_file.write("Total Votes: " + str(Total)  +"\n")
+text_file.write("-------------------------\n")
+text_file.write(f"{Can1}  {round(PCan1V , 2)}%  ({Can1V})\n")
+text_file.write(f"{Can2}  {round(PCan2V , 2)}%  ({Can2V})\n")
+text_file.write(f"{Can3}  {round(PCan3V , 2)}%  ({Can3V})\n")
+text_file.write(f"{Can4}  {round(PCan4V , 2)}%  ({Can4V})\n")
+text_file.write("-------------------------\n")
+text_file.write("Winner: " +  winner + "\n")
+text_file.write("-------------------------\n")
+text_file.close()
   #* The total number of votes cast
 
   #* A complete list of candidates who received votes
