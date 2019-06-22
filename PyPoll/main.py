@@ -1,24 +1,15 @@
 ## PyPoll
 import os 
 import csv
+import numpy as np
 #![Vote-Counting](Images/Vote_counting.png)
 #* In this challenge, you are tasked with helping a small, rural town modernize its vote-counting process. (Up until now, Uncle Cleetus had been trustfully tallying them one-by-one, but unfortunately, his concentration isn't what it used to be.)
 poll_csv = os.path.join('resources','election_data.csv')
 #* You will be give a set of poll data called [election_data.csv](PyPoll/Resources/election_data.csv). The dataset is composed of three columns: `Voter ID`, `County`, and `Candidate`. Your task is to create a Python script that analyzes the votes and calculates each of the following:
 
-Vote_count = []
+Candidates = []
 
-County =[]
 
-Names = []
- 
-Named = []
-
-tally = [0, 0, 0, 0,]
-
-Candidate_index = int(Names)
-   
-tally[Candidate_index] += 1
 
 
 with open(poll_csv, newline="") as csvfile:
@@ -26,17 +17,35 @@ with open(poll_csv, newline="") as csvfile:
   header = next(csvreader)
 
   for row in csvreader:
-    Vote_count.append(row[0])
 
-    County.append(row[1])
 
-    Names.append(row[2])
+    Candidates.append(row[2])
 
-  #print(len(Vote_count))
-  print(tally)
+Names = np.unique(Candidates)
+Votes = np.array(np.unique(Candidates, return_counts=True))
 
+Total =  len(Candidates)
+
+Can1 = Votes[0,0]
+Can2 = Votes[0,1]
+Can3 = Votes[0,2]
+Can4 = Votes[0,3]
+Can1V = Votes[1,0]
+Can2V = Votes[1,1]
+Can3V = Votes[1,2]
+Can4V = Votes[1,3]
+
+PCan1V = float(Can1V) / float(Total) * 100
+PCan2V = float(Can2V) / float(Total) * 100
+PCan3V = float(Can3V) / float(Total) * 100
+PCan4V = float(Can4V) / float(Total) * 100
+
+
+print(f"{Can1}  {round(PCan1V , 2)}%  ({Can1V})")
+print(f"{Can2}  {round(PCan2V , 2)}%  ({Can2V})")
+print(f"{Can3}  {round(PCan3V , 2)}%  ({Can3V})")
+print(f"{Can4}  {round(PCan4V , 2)}%  ({Can4V})")
   #* The total number of votes cast
-
 
   #* A complete list of candidates who received votes
 

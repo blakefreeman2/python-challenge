@@ -47,8 +47,6 @@ with open(csvpath, newline="") as csvfile:
       changeavgtot -= change 
     x = int(row[1])
 
-  
-mydict = dict(zip(months,profit))
 amont = sum(amtchange)
 Average = amont / len(amtchange)
 
